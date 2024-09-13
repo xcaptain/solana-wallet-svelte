@@ -55,7 +55,9 @@
                             onclick={async () => {
                                 await handleConnect(wallet.adapter);
                             }}
-                            type="button">{wallet.adapter.name}</button
+                            type="button">
+                            <img alt="icon of {wallet.adapter.name}" src={wallet.adapter.icon} width="38px"/>
+                            {wallet.adapter.name}</button
                         >
                     {:else}
                         <button type="button"
