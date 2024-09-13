@@ -19,7 +19,7 @@ So I made this project to learn how solana wallets works on a web frontend proje
 
 ## Code Exaplain
 
-`walletStore.ts` contains the core logic about the connected wallet state. all the heavy stuff is done here.
+`walletStore.ts` contains the core logic about the connected wallet state. all the heavy stuff is done here, mostly copied from the above 2 projects.
 
 `WalletProvider.svelte` init the walletStore so we can use in other pages
 
