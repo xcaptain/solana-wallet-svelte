@@ -2,6 +2,8 @@
 
 Implement solana wallet adapter using svelte
 
+[Demo App](https://solana-wallet-svelte.pages.dev)
+
 ## Background
 
 1. https://github.com/svelte-on-solana/wallet-adapter hasn't been updated for 2 years
