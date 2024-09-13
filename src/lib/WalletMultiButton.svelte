@@ -34,19 +34,27 @@
     async function handleDisconnect() {
         await $walletStore.disconnect();
     }
+
+    function abbrAddress(address: string) {
+        return `${address.slice(0, 4)}...${address.slice(-4)}`;
+    }
 </script>
 
 {#if $walletStore.connected}
-    <button id="connected-wallet-btn" popovertarget="wallet-menu"
-        >Connected/{$walletStore.publicKey}</button
+    <button id="connected-wallet-btn" popovertarget="connected-wallet-menu"
+        >{abbrAddress($walletStore.publicKey!.toBase58())}</button
     >
-    <div id="wallet-menu" popover>
-        <button onclick={copyToClipboard}>Copy Address</button>
-        <button onclick={handleDisconnect}>Disconnect</button>
+    <div id="connected-wallet-menu" popover="auto">
+        <ul>
+            <li><button onclick={copyToClipboard}>Copy Address</button></li>
+            <li><button onclick={handleDisconnect}>Disconnect</button></li>
+        </ul>
     </div>
 {:else}
-    <button popovertarget="select-wallet-modal">Connect Solana Wallet</button>
-    <div id="select-wallet-modal" popover>
+    <button id="select-wallet-btn" popovertarget="select-wallet-modal"
+        >Connect Solana Wallet</button
+    >
+    <div id="select-wallet-modal" popover="auto">
         <ul>
             {#each installedWalletAdaptersWithReadyState as wallet}
                 <li>
@@ -55,8 +63,13 @@
                             onclick={async () => {
                                 await handleConnect(wallet.adapter);
                             }}
-                            type="button">
-                            <img alt="icon of {wallet.adapter.name}" src={wallet.adapter.icon} width="38px"/>
+                            type="button"
+                        >
+                            <img
+                                alt="icon of {wallet.adapter.name}"
+                                src={wallet.adapter.icon}
+                                width="38px"
+                            />
                             {wallet.adapter.name}</button
                         >
                     {:else}
@@ -72,11 +85,38 @@
 {/if}
 
 <style>
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        list-style-type: none;
+    }
+    [popover] {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
     #connected-wallet-btn {
         anchor-name: --connected-wallet-btn;
     }
-    #wallet-menu {
-        top: anchor(--connected-wallet-btn bottom);
-        left: anchor(--connected-wallet-btn left);
+    #connected-wallet-menu {
+        position: absolute;
+        position-anchor: --connected-wallet-btn;
+        right: anchor(right);
+        top: anchor(bottom);
+        inset-area: bottom;
+    }
+
+    #select-wallet-btn {
+        anchor-name: --select-wallet-btn;
+    }
+    #select-wallet-modal {
+        position-anchor: --select-wallet-btn;
+        right: anchor(right);
+        bottom: anchor(bottom);
+        inset-area: bottom;
     }
 </style>
