@@ -1,11 +1,11 @@
 <script lang="ts">
   import svelteLogo from "./assets/svelte.svg";
   import viteLogo from "/vite.svg";
-  import Counter from "./lib/Counter.svelte";
   import WalletMultiButton from "./lib/WalletMultiButton.svelte";
   import WalletProvider from "./lib/WalletProvider.svelte";
   import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
   import { SolflareWalletAdapter } from "@solana/wallet-adapter-solflare";
+  import Transfer from "./lib/Transfer.svelte";
 
   const localStorageKey = "walletAdapter";
   const walletAdapters = [
@@ -26,9 +26,9 @@
   <h1>Vite + Svelte</h1>
 
   <div class="card">
-    <!-- <Counter /> -->
     <WalletProvider {localStorageKey} wallets={walletAdapters} autoConnect />
     <WalletMultiButton />
+    <Transfer />
   </div>
 
   <p>
